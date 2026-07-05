@@ -32,3 +32,13 @@ templates/report-shell.html     报告壳（左侧目录、进度条、章内引
 ## 产出长什么样
 
 单文件 HTML 报告：左侧固定目录 + 阅读进度条，正文每个关键事实带可点角标，跳到该章末尾的来源列表（标题 / 出处 / 日期 / 原文链接）。同目录下配 docx（可编辑转发）和 pdf。
+
+## 移植到其他框架（Hermes、Dify、自建多 agent 等）
+
+不用 Claude Code 也能拿走大部分东西。这套 skill 拆开是三层：
+
+1. **流程与提示词——直接搬**。SKILL.md 的拆面方法（怎么把一个问题拆成 4-8 个互相独立的取证面、留一路给反方观点）、两个模板里每路取证 prompt 的写法（点名拆法、"不编造/查不到标未核实"的公共尾巴、返回 schema）、成稿铁律，全是纯文本。把 prompt 拆出来映射成你自己框架里的检索/撰写节点即可。
+2. **执行器——换成你自己的**。模板里 `agent()/pipeline()/parallel()` 这套调度是 Claude Code 的 Workflow 工具，其他框架用自己的并行编排替代这一层。
+3. **产出层——直接搬**。`report-shell.html` 是纯 HTML/CSS 报告壳，谁填都一样；pandoc / Chrome 转 docx、pdf 是普通命令行。
+
+一句话：Claude Code 独占的只有并行执行器，方法论、prompt 素材和报告壳都是通用资产。
